@@ -139,7 +139,7 @@ func TestDNSProvider_getHostedZone(t *testing.T) {
 
 	domains := []govultr.Domain{{Domain: "example.com"}, {Domain: "example.org"}, {Domain: "example.net"}}
 
-	for i := range 50 {
+	for i := 0; i < 50; i++ {
 		domains = append(domains, govultr.Domain{Domain: fmt.Sprintf("my%02d.example.com", i)})
 	}
 

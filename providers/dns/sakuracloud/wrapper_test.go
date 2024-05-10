@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
 	"github.com/stretchr/testify/require"
 )
@@ -93,7 +92,7 @@ func TestDNSProvider_concurrentAddAndCleanupRecords(t *testing.T) {
 	dummyRecordCount := 10
 
 	var providers []*DNSProvider
-	for range dummyRecordCount {
+	for i := 0; i < dummyRecordCount; i++ {
 		config := NewDefaultConfig()
 		config.Token = "token3"
 		config.Secret = "secret3"
