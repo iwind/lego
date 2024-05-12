@@ -129,16 +129,15 @@ func (c *Challenge) Solve(authz acme.Authorization) error {
 
 	time.Sleep(interval)
 
-	err = wait.For("propagation", timeout, interval, func() (bool, error) {
+	_ = wait.For("propagation", timeout, interval, func() (bool, error) {
 		stop, errP := c.preCheck.call(domain, info.EffectiveFQDN, info.Value)
 		if !stop || errP != nil {
 			log.Infof("[%s] acme: Waiting for DNS record propagation.", domain)
 		}
 		return stop, errP
 	})
-	if err != nil {
-		return err
-	}
+
+	// goedge: submit challenge even precheck failed
 
 	chlng.KeyAuthorization = keyAuth
 	return c.validate(c.core, domain, chlng)
